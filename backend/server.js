@@ -2,8 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
 
 const bookingRoutes = require('./routes/bookingRoutes');
 const adminRoutes = require('./routes/adminRoutes');
@@ -37,24 +35,16 @@ app.use(cors({
   credentials: true
 }));
 
-// Session — stored in MongoDB Atlas so sessions persist across serverless instances
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'kandy-breeze-secret',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    ttl: 86400,           // sessions expire after 1 day
-    autoRemove: 'native',
-    touchAfter: 3600      // only update session every hour to reduce writes
-  }),
-  cookie: {
-    secure: isProduction,
-    httpOnly: true,
-    maxAge: 86400000,     // 1 day in ms
-    sameSite: isProduction ? 'none' : 'lax'
-  }
-}));
+// Parse cookies (for reading JWT from httpOnly cookie)
+app.use((req, res, next) => {
+  const cookieHeader = req.headers.cookie || '';
+  req.cookies = {};
+  cookieHeader.split(';').forEach(pair => {
+    const [key, ...val] = pair.trim().split('=');
+    if (key) req.cookies[key.trim()] = decodeURIComponent(val.join('='));
+  });
+  next();
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
