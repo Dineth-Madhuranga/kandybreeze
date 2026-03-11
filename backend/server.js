@@ -9,12 +9,41 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Guard against multiple connections on serverless warm starts
-if (mongoose.connection.readyState === 0) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB error:', err));
+// MongoDB Cached Connection for Serverless
+let cachedDb = null;
+
+async function connectDB() {
+  if (cachedDb) {
+    return cachedDb;
+  }
+
+  if (mongoose.connection.readyState >= 1) {
+    return mongoose.connection;
+  }
+
+  try {
+    const db = await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    cachedDb = db;
+    console.log('MongoDB connected successfully');
+    return db;
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    throw err;
+  }
 }
+
+// Middleware to ensure DB connection is ready before handling any API request
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Database connection failed' });
+  }
+});
 
 app.use(express.json());
 
