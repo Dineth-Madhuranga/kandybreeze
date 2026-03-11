@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 
 const bookingRoutes = require('./routes/bookingRoutes');
 const adminRoutes = require('./routes/adminRoutes');
@@ -10,7 +11,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 const isProduction = process.env.NODE_ENV === 'production';
 
-// Connect to MongoDB — guard against multiple connections in serverless warm starts
+// Guard against multiple connections on serverless warm starts
 if (mongoose.connection.readyState === 0) {
   mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('MongoDB connected'))
@@ -19,7 +20,7 @@ if (mongoose.connection.readyState === 0) {
 
 app.use(express.json());
 
-// CORS
+// CORS — allow local dev + deployed frontend
 const allowedOrigins = [
   'http://localhost:5173',
   process.env.FRONTEND_URL,
@@ -36,15 +37,21 @@ app.use(cors({
   credentials: true
 }));
 
-// Session — using MemoryStore (works reliably on serverless)
+// Session — stored in MongoDB Atlas so sessions persist across serverless instances
 app.use(session({
   secret: process.env.SESSION_SECRET || 'kandy-breeze-secret',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    ttl: 86400,           // sessions expire after 1 day
+    autoRemove: 'native',
+    touchAfter: 3600      // only update session every hour to reduce writes
+  }),
   cookie: {
     secure: isProduction,
     httpOnly: true,
-    maxAge: 86400000,
+    maxAge: 86400000,     // 1 day in ms
     sameSite: isProduction ? 'none' : 'lax'
   }
 }));
@@ -61,10 +68,10 @@ app.get('/api/health', (req, res) => {
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/admin', adminRoutes);
 
-// Export for Vercel serverless handler
+// Export for Vercel serverless
 module.exports = app;
 
-// Only start HTTP server locally (Vercel sets process.env.VERCEL)
+// Only start HTTP server locally
 if (!process.env.VERCEL) {
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
