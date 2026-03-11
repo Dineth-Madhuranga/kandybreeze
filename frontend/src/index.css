@@ -1,0 +1,416 @@
+/* ============================================
+   KANDY BREEZE - GLOBAL DESIGN SYSTEM
+   ============================================ */
+
+:root {
+  /* Colors */
+  --color-bg: #0D1B2A;
+  --color-bg-alt: #112236;
+  --color-gold: #F5A623;
+  --color-coral: #FF5F40;
+  --color-cream: #FFF8EE;
+  --color-white: #FFFFFF;
+  --color-muted: #8A9BB0;
+  --color-card-bg: #162840;
+  --color-border: rgba(245, 166, 35, 0.2);
+
+  /* Status colors */
+  --color-pending: #F5A623;
+  --color-approved: #2ECC71;
+  --color-rejected: #E74C3C;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 8rem;
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-gold: 0 0 30px rgba(245, 166, 35, 0.25);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-med: 0.4s ease;
+  --transition-slow: 0.7s ease;
+}
+
+/* ============================================
+   LIGHT MODE THEME
+   ============================================ */
+
+[data-theme="light"] {
+  --color-bg: #F0F4F8;
+  --color-bg-alt: #E4EAF0;
+  --color-gold: #D4880A;
+  --color-coral: #E04520;
+  --color-cream: #1A2535;
+  --color-white: #0D1B2A;
+  --color-muted: #5A6A7E;
+  --color-card-bg: #FFFFFF;
+  --color-border: rgba(212, 136, 10, 0.25);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-white);
+}
+
+a {
+  color: var(--color-gold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-coral);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-coral);
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+
+#cursor {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  opacity: 0.8;
+  transition: transform 0.1s ease;
+}
+
+@media (pointer: coarse) {
+  #cursor {
+    display: none;
+  }
+}
+
+/* ============================================
+   SELECTION
+   ============================================ */
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.section {
+  padding: var(--space-xl) 0;
+  position: relative;
+}
+
+.section-alt {
+  background-color: var(--color-bg-alt);
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--color-gold);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+  color: var(--color-white);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-gold);
+  border: 2px solid var(--color-gold);
+}
+
+.btn-outline:hover {
+  background: var(--color-gold);
+  color: var(--color-bg);
+}
+
+.btn-coral {
+  background: var(--color-coral);
+  color: var(--color-white);
+}
+
+.btn-coral:hover {
+  background: #e54d2e;
+  color: var(--color-white);
+}
+
+/* Badge styles */
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: var(--radius-pill);
+}
+
+.badge-gold {
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--color-gold);
+  border: 1px solid var(--color-gold);
+}
+
+.badge-pending {
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--color-pending);
+}
+
+.badge-approved {
+  background: rgba(46, 204, 113, 0.15);
+  color: var(--color-approved);
+}
+
+.badge-rejected {
+  background: rgba(231, 76, 60, 0.15);
+  color: var(--color-rejected);
+}
+
+/* Card styles */
+.card {
+  background: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  border-top: 2px solid var(--color-gold);
+  transition: all var(--transition-fast);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 14px 18px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-cream);
+  background: var(--color-card-bg);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-muted);
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-error {
+  color: var(--color-coral);
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+}
+
+.form-checkbox input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-gold);
+  margin-top: 2px;
+}
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+@media (max-width: 1200px) {
+  :root {
+    --space-xl: 6rem;
+  }
+}
+
+@media (max-width: 992px) {
+  :root {
+    --space-xl: 5rem;
+    --space-lg: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --space-xl: 4rem;
+    --space-lg: 2rem;
+    --space-md: 1.5rem;
+  }
+
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --space-xl: 3rem;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.875rem;
+  }
+}

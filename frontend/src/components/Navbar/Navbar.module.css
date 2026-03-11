@@ -1,0 +1,183 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all var(--transition-fast);
+  background: transparent;
+}
+
+.scrolled {
+  background: rgba(13, 27, 42, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.lanternIcon {
+  width: 32px;
+  height: 40px;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  color: var(--color-cream);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  padding: 8px 0;
+  transition: color var(--transition-fast);
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--color-gold);
+  transition: width var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-gold);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: var(--color-gold);
+  color: var(--color-white);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all var(--transition-fast);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+  color: var(--color-white);
+}
+
+.hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.mobileMenu {
+  display: none;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.mobileLink {
+  display: block;
+  padding: 16px var(--space-md);
+  color: var(--color-cream);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(245, 166, 35, 0.1);
+  transition: all var(--transition-fast);
+}
+
+.mobileLink:hover {
+  background: rgba(245, 166, 35, 0.1);
+  color: var(--color-gold);
+}
+
+.mobileCta {
+  background: var(--color-gold);
+  color: var(--color-white);
+  text-align: center;
+  font-weight: 600;
+}
+
+.mobileCta:hover {
+  background: var(--color-gold);
+  opacity: 0.9;
+}
+
+@media (max-width: 992px) {
+  .navLinks {
+    display: none;
+  }
+
+  .ctaButton {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: 70px;
+    padding: 0 var(--space-sm);
+  }
+
+  .logoText {
+    font-size: 1.25rem;
+  }
+
+  .lanternIcon {
+    width: 28px;
+    height: 35px;
+  }
+}

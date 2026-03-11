@@ -1,0 +1,137 @@
+.whatson {
+  padding: var(--space-xl) 0;
+  background: var(--color-bg);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.card {
+  background: var(--color-card-bg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  border-top: 2px solid var(--color-gold);
+  transition: all var(--transition-fast);
+  will-change: transform;
+  overflow: hidden;
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.cardMask {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+      rgba(5, 12, 22, 0.92) 0%,
+      rgba(5, 12, 22, 0.55) 50%,
+      rgba(5, 12, 22, 0.25) 100%);
+  z-index: 1;
+  transition: background var(--transition-med);
+}
+
+.card:hover .cardMask {
+  background: linear-gradient(to top,
+      rgba(5, 12, 22, 0.97) 0%,
+      rgba(5, 12, 22, 0.65) 50%,
+      rgba(5, 12, 22, 0.35) 100%);
+}
+
+.cardBody {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-md) var(--space-md) var(--space-lg);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card);
+}
+
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-md);
+  background: rgba(245, 166, 35, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 30px rgba(245, 166, 35, 0.2);
+}
+
+.icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: var(--space-sm);
+}
+
+.cardDescription {
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 1200px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .whatson {
+    padding: var(--space-lg) 0;
+  }
+
+  .container {
+    padding: 0 var(--space-sm);
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .card {
+    padding: var(--space-md);
+  }
+
+  .iconWrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  .cardTitle {
+    font-size: 1.25rem;
+  }
+}
